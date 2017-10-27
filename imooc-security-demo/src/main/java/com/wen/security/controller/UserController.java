@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.wen.security.exception.UserNotExistException;
 import com.wen.security.model.User;
 import com.wen.security.model.User.UserDetailView;
 import com.wen.security.model.User.UserSimpleView;
@@ -39,8 +40,9 @@ public class UserController {
 	public  User hello(@PathVariable(value="id") int id ) {
 		User user=new User();
 		user.setId(id);
-		System.out.println(id);
+		user.setUsername("haha");
 		return user;
+		//throw new UserNotExistException(id+"");
 	}
 	@PostMapping()
 	public User whenCreateSuccess(@Valid User userRe,BindingResult errors) {

@@ -3,7 +3,6 @@ package com.wen.security.test;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
 public class UserTest extends BaseTest{
 	@Autowired
 	private WebApplicationContext wac;
@@ -40,7 +38,6 @@ public class UserTest extends BaseTest{
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
 				.andReturn().getResponse().getContentAsString();
 		System.out.println(result);
-
 	}
 	/**
 	 * 用户创建请求
