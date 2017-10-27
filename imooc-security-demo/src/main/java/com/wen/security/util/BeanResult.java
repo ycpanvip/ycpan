@@ -1,12 +1,31 @@
 package com.wen.security.util;
-
 import java.util.List;
-
 public class BeanResult {
 	private List<String> list;
 	private String orderByString;
 	private String stringParam;
 	private String stringField;
+	private String path;
+	private String xmlString;
+	private byte[] byteString;
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public String getXmlString() {
+		return xmlString;
+	}
+	public void setXmlString(String xmlString) {
+		this.xmlString = xmlString;
+	}
+	public byte[] getByteString() {
+		return byteString;
+	}
+	public void setByteString(byte[] byteString) {
+		this.byteString = byteString;
+	}
 	public List<String> getList() {
 		return list;
 	}
