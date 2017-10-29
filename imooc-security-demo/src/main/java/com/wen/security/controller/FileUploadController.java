@@ -1,15 +1,10 @@
 package com.wen.security.controller;
-
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.wen.security.util.CxhcUtil;
 @RestController
 @RequestMapping("/file")
@@ -39,14 +33,14 @@ public class FileUploadController {
 		      }  	
 		}
 	}
-	@GetMapping("/{id}")
+	@GetMapping("/{id:.+}")
 	public void download (@PathVariable String id,HttpServletRequest request,HttpServletResponse response) {
 		System.out.println(id);
 		InputStream inputStream=null;
 		OutputStream putStream=null;
 		try {
-			 inputStream=new FileInputStream(new File("C:\\Users\\chenwq\\AppData\\Local\\Temp\\2017\\10\\27\\37163060.txt"));
-			 putStream=response.getOutputStream();
+		    inputStream=new FileInputStream(new File("C:\\Users\\文强\\AppData\\Local\\Temp\\2017\\10\\28\\"+id));
+			putStream=response.getOutputStream();
 			response.setContentType("application/x-download");
 			response.addHeader("Content-Disposition", "attachment;filename=test.txt");
 			IOUtils.copy(inputStream, putStream);
@@ -56,7 +50,6 @@ public class FileUploadController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			
 		}
 	}
 }

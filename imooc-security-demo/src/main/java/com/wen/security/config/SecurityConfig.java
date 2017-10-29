@@ -15,12 +15,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	/**
 	 * @author cxhc
 	 * @deprecated 暂时还不懂
-	 * @param http
+	 * @param http 
 	 */
 	protected void configure(HttpSecurity http)throws Exception{
-		http.formLogin().loginPage("/page/login")
-		//http.httpBasic()
+		//http.formLogin().loginPage("/page/login")
+		http.httpBasic()
 		.and().authorizeRequests().anyRequest().authenticated();
 	}
-	
 }
