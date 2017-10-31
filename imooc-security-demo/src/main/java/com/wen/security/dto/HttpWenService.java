@@ -6,15 +6,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.wen.security.model.train.SeatName;
+import com.wen.security.model.train.Seats;
+import com.wen.security.model.train.TrainBean;
+import com.wen.security.model.train.TrainData;
 
 
 public class HttpWenService {
 	public static String httpRequest(String requestUrl) {
-		 requestUrl = "https://train.qunar.com/dict/open/s2s.do?callback=jQuery17205405101519013015_1509342492073&dptStation=南京&arrStation=上海&date=2017-10-31&type=normal&user=neibu&source=site&start=1&num=500&sort=3&_=1509342492486";
+		 requestUrl = "https://train.qunar.com/dict/open/s2s.do?callback=jQuery17205405101519013015_1509342492073&dptStation=南京&arrStation=沧州&date=2017-10-31&type=normal&user=neibu&source=site&start=1&num=500&sort=3&_=1509342492486";
 		StringBuffer buffer = null;
 		BufferedReader bufferedReader = null;
 		InputStreamReader inputStreamReader = null;
@@ -75,9 +80,23 @@ public class HttpWenService {
 		System.out.println(html);
 		String result=html.substring(0,html.length()-2).replace("/**/jQuery17205405101519013015_1509342492073(", "");
 		
-		Map map=(Map)JSON.parse(result);  
-		System.out.println();
-		map=(Map)JSON.parse(map.get("data").toString());  
+		JSONObject json = (JSONObject) JSONObject.parse(result);
+		String strData = json.getString("data");
+		TrainData trainData = JSONObject.parseObject(strData, TrainData.class);
+		List<TrainBean> TrainBeanList = trainData.getS2sBeanList();
+		for (TrainBean trainBean : TrainBeanList) {
+			JSONObject seatsJson = JSONObject.parseObject(trainBean.getSeats());
+			Seats seats = new Seats();
+			Map<String, SeatName> seatNameMap = new HashMap<String, SeatName>();
+			for (String key : seatsJson.keySet()) {
+				SeatName seatName = JSONObject.parseObject(seatsJson.getString(key), SeatName.class);
+				seatNameMap.put(key, seatName);
+				seats.setSeatName(seatNameMap);
+				trainBean.setSeatsBean(seats);
+			}
+		}
+		
+		System.out.println(trainData);
 		return "haha";
 	}
 }
